@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("HoangCV", "onClick: relatedWord: " + relatedWord);
                     String diseasesName = dataProcessing(str);
                     Log.d("HoangCV", "onClick: diseasesName: " + diseasesName);
-                    String data = "{\"size\":20,\"sort\":[{\"_score\": \"desc\"}],\"query\":{\"bool\":{\"must\":{\"multi_match\":{\"query\":\"" + diseasesName + " \",\"fields\":[\"header\",\"description\"]}},\"should\":{\"multi_match\":{\"query\":\"" + relatedWord + " OR ( ) \",\"fields\":\"header\"}}}},\"_source\":[\"header\",\"description\",\"web_url\",\"post_url\",\"content\"]}";
+                    String data = "{\"size\":20,\"sort\":[{\"_score\": \"desc\"}],\"query\":{\"bool\":{\"must\":{\"multi_match\":{\"query\":\"" + diseasesName + " \",\"fields\":[\"header\"]}},\"should\":{\"bool\":{\"filter\":{\"multi_match\":{\"query\":\"" + relatedWord + " OR ( ) \",\"fields\":[\"header\"]}},\"should\":{\"multi_match\":{\"query\":\"" + relatedWord + " OR ( ) \",\"fields\":\"description\"}}}}}},\"_source\":[\"header\",\"description\",\"web_url\",\"post_url\",\"content\"]}";
                     jsonParse(data);
                 }
                 ;
