@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("HoangCV", "onClick: relatedWord: " + relatedWord);
                     String diseasesName = dataProcessing(str);
                     Log.d("HoangCV", "onClick: diseasesName: " + diseasesName);
-                    String data = "{\"size\":20,\"sort\":[{\"_score\": \"desc\"}],\"query\":{\"bool\":{\"must\":{\"multi_match\":{\"query\":\"" + diseasesName + " \",\"fields\":[\"header\"]}},\"should\":{\"bool\":{\"filter\":{\"multi_match\":{\"query\":\"" + relatedWord + " OR ( ) \",\"fields\":[\"header\"]}},\"should\":{\"multi_match\":{\"query\":\"" + relatedWord + " OR ( ) \",\"fields\":\"description\"}}}}}},\"_source\":[\"header\",\"description\",\"web_url\",\"post_url\",\"content\"]}";
+                    String data = "{\"size\":20,\"sort\":[{\"_score\": \"desc\"}],\"query\":{\"bool\":{\"must\":{\"multi_match\":{\"query\":\"" + diseasesName + " \",\"fields\":[\"header\"]}},\"should\":{\"bool\":{\"filter\":{\"multi_match\":{\"query\":\"" + relatedWord + " \",\"fields\":[\"header\"]}},\"should\":{\"multi_match\":{\"query\":\"" + relatedWord + " \",\"fields\":\"description\"}}}}}},\"_source\":[\"header\",\"description\",\"web_url\",\"post_url\",\"content\"]}";
                     jsonParse(data);
                 }
                 ;
@@ -224,14 +224,14 @@ public class MainActivity extends AppCompatActivity {
             if ((data.equals("Bệnh") || (data.equals("Và")) || (data.equals("Benh")) || (data.equals("Va")) || (data.equals("Va Benh")) || (data.equals("Và Bệnh")))) {
                 data = "";
             }
-            while ((data.indexOf("Và ") >= 0) || (data.indexOf("Va ") >= 0)) {
+            while ((data.indexOf("Và ") >= 0) || (data.indexOf("Va ") >= 0) || ((data.indexOf("Và") >= 0)&&(data.indexOf("à")==data.length()-1))) {
                 {
                     int index = (data.indexOf("Và") >= 0) ? data.indexOf("Và") : data.indexOf("Va");
                     data = data.substring(0, index) + data.substring(2 + index);
                 }
             }
-            if (data.equals("") == false)
-                result = result + "( " + data + " ) OR ";
+/*            if (data.equals("") == false)
+                result = result + "( " + data + " ) OR ";*/
         }
         if (result.equals(""))
             return "(" + data + ")";
